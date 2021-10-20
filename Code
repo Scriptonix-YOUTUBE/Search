@@ -58,7 +58,7 @@ end
 if _G.LoopSearch then
 	while _G.LoopSearch do
 		doe()
-		wait(60)
+		wait(_G.LoopSeconds)
 	end
 else
 	doe()
