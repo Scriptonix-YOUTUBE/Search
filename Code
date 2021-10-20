@@ -1,33 +1,65 @@
-print('Searching...')
-local function search()
-    wait(0.5)
-    local plrs = {}
-    for i, v in pairs(workspace:GetDescendants()) do
-        if i%100 == 0 then wait() end
-        if v.Name == 'HumanoidRootPart' and not v.Parent:FindFirstChild'Head' then
-            table.insert(plrs,v.Parent)
-        end
-    end
-    return plrs
+local function doe()
+	print('Searching...')
+
+	local function display(skid)
+		skid.Shape = Enum.PartType.Ball
+		skid.Transparency = 0
+		skid.Size = Vector3.new(2,2,2)
+		skid.BrickColor = BrickColor.Red()
+		skid.TopSurface = Enum.SurfaceType.Smooth
+		skid.BottomSurface = Enum.SurfaceType.Smooth
+	end
+
+	local function anti(skid)
+		skid.CanCollide = false
+	end
+
+	local function search()
+		wait(0.5)
+		local plrs = {}
+		for i, v in pairs(workspace:GetDescendants()) do
+			if i%100 == 0 then wait() end
+			if v.Name == 'HumanoidRootPart' and not v.Parent:FindFirstChild'Head' then
+				if _G.DisplaySkids then
+					display(v)
+				end
+				if _G.AntiFling then
+					anti(v)
+				end
+				table.insert(plrs,v.Parent)
+			end
+		end
+		return plrs
+	end
+
+	local plrs = search()
+	if #plrs>0 then
+		print('Invis-Fling skids found!')
+		for i, p in pairs(plrs) do 
+			local plr = game:GetService'Players':GetPlayerFromCharacter(p)
+			local hrp = p:WaitForChild'HumanoidRootPart'
+			print(string.format(
+				'\n---Player %s found:\nDisplayName: %s\nUsername: %s\nUserId: %s\nPosition: %s\nCFrame: %s\n',
+				i,
+				plr.DisplayName,
+				plr.Name,
+				plr.UserId,
+				tostring(hrp.Position),
+				tostring(hrp.CFrame)
+				))
+			wait()
+		end
+	else
+		print('No Invis-Fling skids found.')
+	end
+
 end
 
-local plrs = search()
-if #plrs>0 then
-    print('Invis-Fling skids found!')
-    for i, p in pairs(plrs) do 
-        local plr = game:GetService'Players':GetPlayerFromCharacter(p)
-        local hrp = p:WaitForChild'HumanoidRootPart'
-        print(string.format(
-            '\n---Player %s found:\nDisplayName: %s\nUsername: %s\nUserId: %s\nPosition: %s\nCFrame: %s\n',
-            i,
-            plr.DisplayName,
-            plr.Name,
-            plr.UserId,
-            tostring(hrp.Position),
-            tostring(hrp.CFrame)
-            ))
-        wait()
-    end
+if _G.LoopSearch then
+	while _G.LoopSearch do
+		wait(60)
+		doe()
+	end
 else
-    print('No Invis-Fling skids found.')
+	doe()
 end
