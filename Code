@@ -1,0 +1,33 @@
+print('Searching...')
+local function search()
+    wait(0.5)
+    local plrs = {}
+    for i, v in pairs(workspace:GetDescendants()) do
+        if i%100 == 0 then wait() end
+        if v.Name == 'HumanoidRootPart' and not v.Parent:FindFirstChild'Head' then
+            table.insert(plrs,v.Parent)
+        end
+    end
+    return plrs
+end
+
+local plrs = search()
+if #plrs>0 then
+    print('Invis-Fling skids found!')
+    for i, p in pairs(plrs) do 
+        local plr = game:GetService'Players':GetPlayerFromCharacter(p)
+        local hrp = p:WaitForChild'HumanoidRootPart'
+        print(string.format(
+            '\n---Player %s found:\nDisplayName: %s\nUsername: %s\nUserId: %s\nPosition: %s\nCFrame: %s\n',
+            i,
+            plr.DisplayName,
+            plr.Name,
+            plr.UserId,
+            tostring(hrp.Position),
+            tostring(hrp.CFrame)
+            ))
+        wait()
+    end
+else
+    print('No Invis-Fling skids found.')
+end
