@@ -2,12 +2,35 @@ local function doe()
 	print('Searching...')
 
 	local function display(skid)
+
+		local BillboardGui = Instance.new("BillboardGui")
+		local TextLabel = Instance.new("TextLabel")
+
+		BillboardGui.Parent = skid
+		BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+		BillboardGui.Active = true
+		BillboardGui.LightInfluence = 1.000
+		BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+		BillboardGui.StudsOffset = Vector3.new(0, 2, 0)
+
+		TextLabel.Parent = BillboardGui
+		TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		TextLabel.BackgroundTransparency = 1.000
+		TextLabel.Size = UDim2.new(1, 0, 1, 0)
+		TextLabel.Font = Enum.Font.SourceSans
+		TextLabel.Text = skid.Parent.Name
+		TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+		TextLabel.TextScaled = true
+		TextLabel.TextSize = 14.000
+		TextLabel.TextWrapped = true
+		
 		skid.Shape = Enum.PartType.Ball
 		skid.Transparency = 0
 		skid.Size = Vector3.new(2,2,2)
 		skid.BrickColor = BrickColor.Red()
 		skid.TopSurface = Enum.SurfaceType.Smooth
 		skid.BottomSurface = Enum.SurfaceType.Smooth
+		skid.Material = Enum.Material.SmoothPlastic
 	end
 
 	local function anti(skid)
