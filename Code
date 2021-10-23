@@ -44,7 +44,9 @@ local function doe()
 			if i%100 == 0 then wait() end
 			if v.Name == 'HumanoidRootPart' and not v.Parent:FindFirstChild'Head' then
 				if _G.DisplaySkids then
+				    if not v:FindFirstChild'BillboardGui' then
 					display(v)
+				    emd
 				end
 				if _G.AntiFling then
 					anti(v)
