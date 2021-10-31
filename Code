@@ -23,7 +23,7 @@ local function doe()
 		TextLabel.TextScaled = true
 		TextLabel.TextSize = 14.000
 		TextLabel.TextWrapped = true
-		
+
 		skid.Shape = Enum.PartType.Ball
 		skid.Transparency = 0
 		skid.Size = Vector3.new(2,2,2)
@@ -44,47 +44,47 @@ local function doe()
 			if i%100 == 0 then wait() end
 			if v.Name == 'HumanoidRootPart' and not v.Parent:FindFirstChild'Head' then
 				if _G.DisplaySkids then
-				    if not v:FindFirstChild'BillboardGui' then
-					display(v)
-				    emd
+					if not v:FindFirstChild'BillboardGui' then
+						display(v)
+						end
+					end
+					if _G.AntiFling then
+						anti(v)
+					end
+					table.insert(plrs,v.Parent)
 				end
-				if _G.AntiFling then
-					anti(v)
-				end
-				table.insert(plrs,v.Parent)
 			end
+			return plrs
 		end
-		return plrs
+
+		local plrs = search()
+		if #plrs>0 then
+			print('Invis-Fling skids found!')
+			for i, p in pairs(plrs) do 
+				local plr = game:GetService'Players':GetPlayerFromCharacter(p)
+				local hrp = p:WaitForChild'HumanoidRootPart'
+				print(string.format(
+					'\n---Player %s found:\nDisplayName: %s\nUsername: %s\nUserId: %s\nPosition: %s\nCFrame: %s\n',
+					i,
+					plr.DisplayName,
+					plr.Name,
+					plr.UserId,
+					tostring(hrp.Position),
+					tostring(hrp.CFrame)
+					))
+				wait()
+			end
+		else
+			print('No Invis-Fling skids found.')
+		end
+
 	end
 
-	local plrs = search()
-	if #plrs>0 then
-		print('Invis-Fling skids found!')
-		for i, p in pairs(plrs) do 
-			local plr = game:GetService'Players':GetPlayerFromCharacter(p)
-			local hrp = p:WaitForChild'HumanoidRootPart'
-			print(string.format(
-				'\n---Player %s found:\nDisplayName: %s\nUsername: %s\nUserId: %s\nPosition: %s\nCFrame: %s\n',
-				i,
-				plr.DisplayName,
-				plr.Name,
-				plr.UserId,
-				tostring(hrp.Position),
-				tostring(hrp.CFrame)
-				))
-			wait()
+	if _G.LoopSearch then
+		while _G.LoopSearch do
+			doe()
+			wait(_G.LoopSeconds)
 		end
 	else
-		print('No Invis-Fling skids found.')
-	end
-
-end
-
-if _G.LoopSearch then
-	while _G.LoopSearch do
 		doe()
-		wait(_G.LoopSeconds)
 	end
-else
-	doe()
-end
